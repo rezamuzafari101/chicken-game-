@@ -1,290 +1,337 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>بازی مرغ VIP</title>
-<style>
-  * { box-sizing: border-box; }
-  body{
-    margin:0;
-    font-family:Tahoma,Arial,sans-serif;
-    background:linear-gradient(180deg,#fff8e7,#ffe8b6);
-    text-align:center;
-    color:#222;
-  }
-  .wrap{
-    max-width:720px;
-    margin:0 auto;
-    padding:18px;
-  }
-  .card{
-    background:#fff;
-    border-radius:22px;
-    padding:20px;
-    box-shadow:0 12px 30px rgba(0,0,0,.10);
-    margin-bottom:16px;
-  }
-  h1{margin:0 0 10px;font-size:32px}
-  .small{
-    color:#666;
-    line-height:1.9;
-    font-size:14px;
-  }
-  .stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
-    margin-top:16px;
-  }
-  .stat{
-    background:#fff7df;
-    border:1px solid #f2e4af;
-    border-radius:16px;
-    padding:12px 8px;
-  }
-  .stat span{
-    display:block;
-    color:#7a6b38;
-    font-size:12px;
-    margin-bottom:6px;
-  }
-  .stat strong{
-    font-size:22px;
-  }
-  .game-box{
-    min-height:240px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    margin-top:16px;
-  }
-  #chicken{
-    width:180px;
-    height:180px;
-    border:none;
-    border-radius:50%;
-    font-size:95px;
-    cursor:pointer;
-    background:#fff;
-    box-shadow:0 12px 24px rgba(0,0,0,.14);
-    transition:transform .08s ease;
-  }
-  #chicken:active{
-    transform:scale(.95);
-  }
-  .btn-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:16px;
-    justify-content:center;
-  }
-  .btn{
-    border:none;
-    border-radius:14px;
-    padding:14px 18px;
-    font-family:inherit;
-    font-size:15px;
-    cursor:pointer;
-    min-width:150px;
-    text-decoration:none;
-    display:inline-block;
-  }
-  .btn-green{background:#16a34a;color:#fff;}
-  .btn-gold{background:#fbbf24;color:#222;}
-  .btn-dark{background:#111827;color:#fff;}
-  .vip-box{
-    background:linear-gradient(90deg,#111827,#374151);
-    color:#fff;
-    border-radius:20px;
-    padding:20px;
-    margin-top:18px;
-  }
-  .vip-badge{
-    display:inline-block;
-    background:#fbbf24;
-    color:#111;
-    padding:6px 12px;
-    border-radius:999px;
-    font-size:13px;
-    font-weight:bold;
-    margin-bottom:10px;
-  }
-  .price{
-    font-size:30px;
-    font-weight:bold;
-    color:#fbbf24;
-    margin:12px 0;
-  }
-  .hidden{display:none;}
-  .notice{
-    margin-top:14px;
-    background:#ecfeff;
-    border:1px solid #a5f3fc;
-    color:#155e75;
-    border-radius:14px;
-    padding:12px;
-    line-height:1.9;
-    font-size:14px;
-  }
-  .floating{
-    position:absolute;
-    color:#16a34a;
-    font-size:24px;
-    font-weight:bold;
-    pointer-events:none;
-    animation:up .8s ease forwards;
-  }
-  @keyframes up{
-    from{opacity:1;transform:translateY(0)}
-    to{opacity:0;transform:translateY(-55px)}
-  }
-  @media (max-width:700px){
-    .stats{grid-template-columns:repeat(2,1fr);}
-    h1{font-size:28px}
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chicken Crash Demo</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Tahoma, Arial, sans-serif;
+      background: #0b1020;
+      color: #fff;
+    }
+    .app {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 14px;
+      background: linear-gradient(180deg, #0d1330, #08101f);
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .balance {
+      background: #1a2447;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 15px;
+      color: #7ef29a;
+      font-weight: bold;
+    }
+    .game-card {
+      background: #101938;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 12px 24px rgba(0,0,0,.25);
+    }
+    .game-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      color: #b9c4ff;
+      font-size: 14px;
+    }
+    .multiplier {
+      text-align: center;
+      font-size: 40px;
+      font-weight: bold;
+      color: #8cc8ff;
+      margin: 10px 0 16px;
+    }
+    .road {
+      position: relative;
+      height: 320px;
+      border-radius: 16px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, transparent 48%, rgba(255,255,255,.08) 49%, rgba(255,255,255,.08) 51%, transparent 52%),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 14px,
+          transparent 14px,
+          transparent 34px
+        ),
+        linear-gradient(180deg, #111d47, #0b1433);
+    }
+    .chicken {
+      position: absolute;
+      left: 28px;
+      bottom: 22px;
+      font-size: 54px;
+      transition: bottom .1s linear, left .1s linear, transform .1s linear;
+      z-index: 2;
+    }
+    .boom {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: bold;
+      background: rgba(255, 59, 48, .18);
+      color: #ff8f8f;
+      z-index: 3;
+    }
+    .markers {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .marker {
+      position: absolute;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cdd7ff;
+      font-size: 12px;
+      background: rgba(255,255,255,.03);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .stat {
+      background: #18244c;
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+    .stat span {
+      display: block;
+      color: #a8b3e6;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    .stat strong {
+      font-size: 22px;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 15px 10px;
+      font-family: inherit;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .start { background: #5b2cff; color: white; }
+    .cash { background: #1d8cff; color: white; }
+    .cash:disabled, .start:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+    .note {
+      margin-top: 12px;
+      color: #99a7de;
+      font-size: 13px;
+      line-height: 1.8;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">🐔 Chicken Crash</div>
+      <div class="balance">سکه: <span id="coinsTop">0</span></div>
+    </div>
 
-    <div class="card">
-      <h1>🐔 بازی مرغ VIP</h1>
-      <p class="small">
-        بازی کن، امتیاز بگیر و برای گرفتن امکانات بیشتر نسخه VIP را فعال کن.
-      </p>
+    <div class="game-card">
+      <div class="game-head">
+        <div>Demo Mode</div>
+        <div>بدون پول واقعی</div>
+      </div>
+
+      <div class="multiplier" id="multiplier">1.00x</div>
+
+      <div class="road" id="road">
+        <div class="markers">
+          <div class="marker" style="right: 26px; top: 28px;">1.20x</div>
+          <div class="marker" style="right: 90px; top: 110px;">1.55x</div>
+          <div class="marker" style="right: 34px; top: 200px;">1.95x</div>
+        </div>
+        <div class="chicken" id="chicken">🐔</div>
+        <div class="boom" id="boom">باخت!</div>
+      </div>
 
       <div class="stats">
-        <div class="stat">
-          <span>امتیاز</span>
-          <strong id="score">0</strong>
-        </div>
         <div class="stat">
           <span>سکه</span>
           <strong id="coins">0</strong>
         </div>
         <div class="stat">
-          <span>قدرت</span>
-          <strong id="power">1</strong>
+          <span>امتیاز</span>
+          <strong id="score">0</strong>
         </div>
         <div class="stat">
-          <span>کلیک</span>
-          <strong id="clicks">0</strong>
+          <span>بهترین ضریب</span>
+          <strong id="best">1.00x</strong>
         </div>
       </div>
 
-      <div class="game-box" id="gameBox">
-        <button id="chicken">🐔</button>
+      <div class="controls">
+        <button class="start" id="startBtn">شروع</button>
+        <button class="cash" id="cashBtn" disabled>توقف</button>
       </div>
 
-      <div class="btn-row">
-        <button class="btn btn-gold" id="upgradeBtn">ارتقا قدرت</button>
-        <button class="btn btn-dark" id="vipBtn">خرید VIP</button>
-      </div>
-
-      <div class="notice">
-        نسخه رایگان فعال است. بعد از چند کلیک، بخش VIP برای امکانات بیشتر باز می‌شود.
+      <div class="note">
+        روی شروع بزن، ضریب بالا میره. قبل از باخت روی توقف بزن تا سکه و امتیاز بگیری.
       </div>
     </div>
-
-    <div class="card hidden" id="vipSection">
-      <div class="vip-box">
-        <div class="vip-badge">VIP</div>
-        <h2>نسخه ویژه بازی</h2>
-        <p class="small" style="color:#e5e7eb">
-          با فعال‌سازی VIP این امکانات را می‌گیری:
-          <br>✅ سکه بیشتر
-          <br>✅ قدرت بیشتر
-          <br>✅ رشد سریع‌تر
-          <br>✅ نسخه ویژه
-        </p>
-
-        <div class="price">5 دلار</div>
-
-        <a class="btn btn-green" href="https://t.me/rezamuzafari101" target="_blank">
-          فعال‌سازی VIP
-        </a>
-
-        <p class="small" style="color:#d1d5db; margin-top:12px">
-          روی دکمه بالا بزن و برای فعال‌سازی نسخه VIP پیام بده.
-        </p>
-      </div>
-    </div>
-
   </div>
 
-<script>
-let score = 0;
-let coins = 0;
-let power = 1;
-let clicks = 0;
+  <script>
+    const multiplierEl = document.getElementById('multiplier');
+    const coinsEl = document.getElementById('coins');
+    const coinsTopEl = document.getElementById('coinsTop');
+    const scoreEl = document.getElementById('score');
+    const bestEl = document.getElementById('best');
+    const startBtn = document.getElementById('startBtn');
+    const cashBtn = document.getElementById('cashBtn');
+    const chickenEl = document.getElementById('chicken');
+    const boomEl = document.getElementById('boom');
 
-const scoreEl = document.getElementById("score");
-const coinsEl = document.getElementById("coins");
-const powerEl = document.getElementById("power");
-const clicksEl = document.getElementById("clicks");
-const chicken = document.getElementById("chicken");
-const vipSection = document.getElementById("vipSection");
-const vipBtn = document.getElementById("vipBtn");
-const upgradeBtn = document.getElementById("upgradeBtn");
-const gameBox = document.getElementById("gameBox");
+    let coins = Number(localStorage.getItem('cc_coins') || 0);
+    let score = Number(localStorage.getItem('cc_score') || 0);
+    let best = Number(localStorage.getItem('cc_best') || 1);
+    let currentMultiplier = 1;
+    let interval = null;
+    let crashAt = 0;
+    let running = false;
 
-function render(){
-  scoreEl.innerText = score;
-  coinsEl.innerText = coins;
-  powerEl.innerText = power;
-  clicksEl.innerText = clicks;
-}
+    function save() {
+      localStorage.setItem('cc_coins', coins);
+      localStorage.setItem('cc_score', score);
+      localStorage.setItem('cc_best', best);
+    }
 
-function showVip(){
-  vipSection.classList.remove("hidden");
-  vipSection.scrollIntoView({behavior:"smooth"});
-}
+    function render() {
+      coinsEl.textContent = coins;
+      coinsTopEl.textContent = coins;
+      scoreEl.textContent = score;
+      bestEl.textContent = best.toFixed(2) + 'x';
+      multiplierEl.textContent = currentMultiplier.toFixed(2) + 'x';
+    }
 
-function floating(text){
-  const el = document.createElement("div");
-  el.className = "floating";
-  el.textContent = text;
-  el.style.left = (gameBox.offsetWidth / 2 - 20 + (Math.random()*90 - 45)) + "px";
-  el.style.top = (80 + Math.random()*30) + "px";
-  gameBox.appendChild(el);
-  setTimeout(() => el.remove(), 800);
-}
+    function resetChicken() {
+      chickenEl.style.left = '28px';
+      chickenEl.style.bottom = '22px';
+      chickenEl.style.transform = 'scale(1)';
+      boomEl.style.display = 'none';
+    }
 
-chicken.onclick = function(){
-  clicks++;
-  score += power;
-  coins += power * 2;
+    function randomCrashPoint() {
+      return 1.20 + Math.random() * 2.80;
+    }
 
-  floating("+" + (power * 2));
+    function animateChicken(mult) {
+      const progress = Math.min((mult - 1) / 2.5, 1);
+      const left = 28 + progress * 190;
+      const bottom = 22 + progress * 210;
+      chickenEl.style.left = left + 'px';
+      chickenEl.style.bottom = bottom + 'px';
+      chickenEl.style.transform = 'scale(' + (1 + progress * 0.25) + ')';
+    }
 
-  if(clicks === 20){
-    showVip();
-    alert("برای امکانات بیشتر، نسخه VIP را فعال کن.");
-  }
+    function endRoundCrash() {
+      clearInterval(interval);
+      running = false;
+      boomEl.style.display = 'flex';
+      chickenEl.style.transform = 'scale(1.15)';
+      startBtn.disabled = false;
+      cashBtn.disabled = true;
+      setTimeout(() => {
+        currentMultiplier = 1;
+        resetChicken();
+        render();
+      }, 1100);
+    }
 
-  render();
-};
+    function startRound() {
+      if (running) return;
+      running = true;
+      currentMultiplier = 1;
+      crashAt = randomCrashPoint();
+      resetChicken();
+      render();
 
-upgradeBtn.onclick = function(){
-  const cost = 50;
-  if(coins >= cost){
-    coins -= cost;
-    power += 1;
+      startBtn.disabled = true;
+      cashBtn.disabled = false;
+
+      interval = setInterval(() => {
+        currentMultiplier += 0.03 + currentMultiplier * 0.01;
+        animateChicken(currentMultiplier);
+        render();
+
+        if (currentMultiplier >= crashAt) {
+          endRoundCrash();
+        }
+      }, 120);
+    }
+
+    function cashOut() {
+      if (!running) return;
+
+      clearInterval(interval);
+      running = false;
+
+      const earnedCoins = Math.floor(currentMultiplier * 10);
+      const earnedScore = Math.floor(currentMultiplier * 5);
+
+      coins += earnedCoins;
+      score += earnedScore;
+      if (currentMultiplier > best) best = currentMultiplier;
+
+      save();
+      render();
+
+      startBtn.disabled = false;
+      cashBtn.disabled = true;
+
+      alert('بردی ✅\\nضریب: ' + currentMultiplier.toFixed(2) + 'x\\nسکه: +' + earnedCoins);
+      currentMultiplier = 1;
+      resetChicken();
+      render();
+    }
+
+    startBtn.addEventListener('click', startRound);
+    cashBtn.addEventListener('click', cashOut);
+
     render();
-    alert("قدرت بیشتر شد ✅");
-  } else {
-    alert("سکه کافی نداری.");
-  }
-};
-
-vipBtn.onclick = function(){
-  showVip();
-};
-
-render();
-</script>
+    resetChicken();
+  </script>
 </body>
 </html>
