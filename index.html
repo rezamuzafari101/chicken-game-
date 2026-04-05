@@ -1,558 +1,290 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>بازی مرغ VIP</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Tahoma, Arial, sans-serif;
-      background: linear-gradient(180deg, #fff8e8, #fff1c9);
-      color: #222;
-    }
-    .container {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-    .card {
-      background: #fff;
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.08);
-      margin-bottom: 16px;
-    }
-    h1,h2,h3,p { margin-top: 0; }
-    .top {
-      text-align: center;
-    }
-    .small {
-      color: #666;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .stat {
-      background: #fff7df;
-      border-radius: 16px;
-      padding: 12px 8px;
-      text-align: center;
-      border: 1px solid #f2e4af;
-    }
-    .stat span {
-      display: block;
-      font-size: 12px;
-      color: #7a6b38;
-      margin-bottom: 6px;
-    }
-    .stat strong {
-      font-size: 22px;
-    }
-    .game-box {
-      text-align: center;
-      margin-top: 20px;
-      position: relative;
-      min-height: 230px;
-    }
-    #chickenBtn {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      border: none;
-      font-size: 90px;
-      cursor: pointer;
-      background: #fff;
-      box-shadow: 0 12px 24px rgba(0,0,0,.12);
-      transition: transform .08s ease;
-    }
-    #chickenBtn:active {
-      transform: scale(.95);
-    }
-    .row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-    .btn {
-      border: none;
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-family: inherit;
-      font-size: 15px;
-      cursor: pointer;
-      flex: 1;
-      min-width: 140px;
-    }
-    .btn-primary { background: #22c55e; color: #fff; }
-    .btn-gold { background: #fbbf24; color: #222; }
-    .btn-dark { background: #111827; color: #fff; }
-    .btn-light { background: #e5e7eb; color: #111; }
-    .btn-red { background: #ef4444; color: white; }
-    .vip-banner {
-      background: linear-gradient(90deg,#111827,#374151);
-      color: white;
-      border-radius: 18px;
-      padding: 16px;
-      margin-top: 16px;
-    }
-    .vip-badge {
-      display: inline-block;
-      background: #fbbf24;
-      color: #111;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-weight: bold;
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 12px;
-      margin-top: 14px;
-    }
-    .plan {
-      border: 1px solid #eee;
-      border-radius: 18px;
-      padding: 16px;
-      background: #fffdf7;
-      text-align: center;
-      box-shadow: 0 6px 16px rgba(0,0,0,.04);
-    }
-    .plan h3 {
-      margin-bottom: 8px;
-      font-size: 18px;
-    }
-    .price {
-      font-size: 28px;
-      font-weight: bold;
-      margin: 10px 0;
-      color: #111827;
-    }
-    .plan ul {
-      list-style: none;
-      padding: 0;
-      margin: 10px 0 16px;
-      font-size: 14px;
-      color: #555;
-      line-height: 2;
-    }
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 13px 12px;
-      font-family: inherit;
-      font-size: 15px;
-      margin-bottom: 10px;
-      background: white;
-    }
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-    .notice {
-      background: #ecfeff;
-      border: 1px solid #a5f3fc;
-      color: #155e75;
-      border-radius: 14px;
-      padding: 12px;
-      line-height: 1.9;
-      font-size: 14px;
-    }
-    .success {
-      background: #ecfdf5;
-      border: 1px solid #86efac;
-      color: #166534;
-      border-radius: 14px;
-      padding: 12px;
-      line-height: 1.9;
-      font-size: 14px;
-    }
-    .hidden { display: none; }
-    .floating {
-      position: absolute;
-      color: #16a34a;
-      font-weight: bold;
-      font-size: 24px;
-      animation: up .8s ease forwards;
-      pointer-events: none;
-    }
-    @keyframes up {
-      from { opacity: 1; transform: translateY(0); }
-      to { opacity: 0; transform: translateY(-55px); }
-    }
-    .code-box {
-      background: #111827;
-      color: #fff;
-      border-radius: 14px;
-      padding: 14px;
-      word-break: break-word;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-    .footer {
-      text-align: center;
-      color: #666;
-      font-size: 12px;
-      padding: 10px;
-    }
-    @media (max-width: 700px) {
-      .stats { grid-template-columns: repeat(2,1fr); }
-      .plans { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بازی مرغ VIP</title>
+<style>
+  * { box-sizing: border-box; }
+  body{
+    margin:0;
+    font-family:Tahoma,Arial,sans-serif;
+    background:linear-gradient(180deg,#fff8e7,#ffe8b6);
+    text-align:center;
+    color:#222;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:18px;
+  }
+  .card{
+    background:#fff;
+    border-radius:22px;
+    padding:20px;
+    box-shadow:0 12px 30px rgba(0,0,0,.10);
+    margin-bottom:16px;
+  }
+  h1{margin:0 0 10px;font-size:32px}
+  .small{
+    color:#666;
+    line-height:1.9;
+    font-size:14px;
+  }
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:16px;
+  }
+  .stat{
+    background:#fff7df;
+    border:1px solid #f2e4af;
+    border-radius:16px;
+    padding:12px 8px;
+  }
+  .stat span{
+    display:block;
+    color:#7a6b38;
+    font-size:12px;
+    margin-bottom:6px;
+  }
+  .stat strong{
+    font-size:22px;
+  }
+  .game-box{
+    min-height:240px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    margin-top:16px;
+  }
+  #chicken{
+    width:180px;
+    height:180px;
+    border:none;
+    border-radius:50%;
+    font-size:95px;
+    cursor:pointer;
+    background:#fff;
+    box-shadow:0 12px 24px rgba(0,0,0,.14);
+    transition:transform .08s ease;
+  }
+  #chicken:active{
+    transform:scale(.95);
+  }
+  .btn-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:16px;
+    justify-content:center;
+  }
+  .btn{
+    border:none;
+    border-radius:14px;
+    padding:14px 18px;
+    font-family:inherit;
+    font-size:15px;
+    cursor:pointer;
+    min-width:150px;
+    text-decoration:none;
+    display:inline-block;
+  }
+  .btn-green{background:#16a34a;color:#fff;}
+  .btn-gold{background:#fbbf24;color:#222;}
+  .btn-dark{background:#111827;color:#fff;}
+  .vip-box{
+    background:linear-gradient(90deg,#111827,#374151);
+    color:#fff;
+    border-radius:20px;
+    padding:20px;
+    margin-top:18px;
+  }
+  .vip-badge{
+    display:inline-block;
+    background:#fbbf24;
+    color:#111;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:10px;
+  }
+  .price{
+    font-size:30px;
+    font-weight:bold;
+    color:#fbbf24;
+    margin:12px 0;
+  }
+  .hidden{display:none;}
+  .notice{
+    margin-top:14px;
+    background:#ecfeff;
+    border:1px solid #a5f3fc;
+    color:#155e75;
+    border-radius:14px;
+    padding:12px;
+    line-height:1.9;
+    font-size:14px;
+  }
+  .floating{
+    position:absolute;
+    color:#16a34a;
+    font-size:24px;
+    font-weight:bold;
+    pointer-events:none;
+    animation:up .8s ease forwards;
+  }
+  @keyframes up{
+    from{opacity:1;transform:translateY(0)}
+    to{opacity:0;transform:translateY(-55px)}
+  }
+  @media (max-width:700px){
+    .stats{grid-template-columns:repeat(2,1fr);}
+    h1{font-size:28px}
+  }
+</style>
 </head>
 <body>
-  <div class="container">
+  <div class="wrap">
 
-    <div class="card top">
+    <div class="card">
       <h1>🐔 بازی مرغ VIP</h1>
-      <p class="small">بازی کن، امتیاز بگیر، و اگر خواستی امکانات بیشتر را با نسخه VIP فعال کن.</p>
+      <p class="small">
+        بازی کن، امتیاز بگیر و برای گرفتن امکانات بیشتر نسخه VIP را فعال کن.
+      </p>
 
       <div class="stats">
-        <div class="stat"><span>امتیاز</span><strong id="score">0</strong></div>
-        <div class="stat"><span>سکه</span><strong id="coins">0</strong></div>
-        <div class="stat"><span>قدرت</span><strong id="power">1</strong></div>
-        <div class="stat"><span>وضعیت</span><strong id="vipState">FREE</strong></div>
+        <div class="stat">
+          <span>امتیاز</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="stat">
+          <span>سکه</span>
+          <strong id="coins">0</strong>
+        </div>
+        <div class="stat">
+          <span>قدرت</span>
+          <strong id="power">1</strong>
+        </div>
+        <div class="stat">
+          <span>کلیک</span>
+          <strong id="clicks">0</strong>
+        </div>
       </div>
 
       <div class="game-box" id="gameBox">
-        <button id="chickenBtn">🐔</button>
+        <button id="chicken">🐔</button>
       </div>
 
-      <div class="row">
+      <div class="btn-row">
         <button class="btn btn-gold" id="upgradeBtn">ارتقا قدرت</button>
-        <button class="btn btn-dark" id="buyVipBtn">خرید VIP</button>
-        <button class="btn btn-light" id="showVipLoginBtn">ورود کد VIP</button>
+        <button class="btn btn-dark" id="vipBtn">خرید VIP</button>
       </div>
 
-      <div class="row">
-        <button class="btn btn-primary" id="vipBonusBtn">بونوس VIP</button>
-        <button class="btn btn-red" id="resetBtn">شروع دوباره</button>
-      </div>
-
-      <div id="topMessage" class="notice" style="margin-top:14px;">
-        نسخه رایگان فعال است. با VIP سرعت بیشتر، بونوس ویژه و قدرت بالاتر می‌گیری.
+      <div class="notice">
+        نسخه رایگان فعال است. بعد از چند کلیک، بخش VIP برای امکانات بیشتر باز می‌شود.
       </div>
     </div>
 
-    <div class="card vip-banner">
-      <div class="vip-badge">VIP</div>
-      <h2>نسخه ویژه بازی</h2>
-      <p class="small" style="color:#e5e7eb;">
-        با فعال‌سازی VIP، هر کلیک سکه بیشتری می‌دهد، ارتقا قوی‌تر می‌شود و بونوس ویژه فعال می‌شود.
-      </p>
-    </div>
+    <div class="card hidden" id="vipSection">
+      <div class="vip-box">
+        <div class="vip-badge">VIP</div>
+        <h2>نسخه ویژه بازی</h2>
+        <p class="small" style="color:#e5e7eb">
+          با فعال‌سازی VIP این امکانات را می‌گیری:
+          <br>✅ سکه بیشتر
+          <br>✅ قدرت بیشتر
+          <br>✅ رشد سریع‌تر
+          <br>✅ نسخه ویژه
+        </p>
 
-    <div class="card">
-      <h2>پلن‌های VIP</h2>
-      <div class="plans">
-        <div class="plan">
-          <h3>VIP هفتگی</h3>
-          <div class="price">$5</div>
-          <ul>
-            <li>قدرت بیشتر</li>
-            <li>بونوس ویژه</li>
-            <li>فعال‌سازی سریع</li>
-          </ul>
-          <button class="btn btn-dark buyPlanBtn" data-plan="VIP هفتگی" data-price="$5">انتخاب این پلن</button>
-        </div>
+        <div class="price">5 دلار</div>
 
-        <div class="plan">
-          <h3>VIP ماهانه</h3>
-          <div class="price">$15</div>
-          <ul>
-            <li>همه امکانات VIP</li>
-            <li>سکه بیشتر</li>
-            <li>بهترین انتخاب</li>
-          </ul>
-          <button class="btn btn-dark buyPlanBtn" data-plan="VIP ماهانه" data-price="$15">انتخاب این پلن</button>
-        </div>
+        <a class="btn btn-green" href="https://t.me/rezamuzafari101" target="_blank">
+          فعال‌سازی VIP
+        </a>
 
-        <div class="plan">
-          <h3>VIP ویژه</h3>
-          <div class="price">$29</div>
-          <ul>
-            <li>دسترسی کامل</li>
-            <li>قدرت خیلی بالا</li>
-            <li>بونوس بزرگ</li>
-          </ul>
-          <button class="btn btn-dark buyPlanBtn" data-plan="VIP ویژه" data-price="$29">انتخاب این پلن</button>
-        </div>
+        <p class="small" style="color:#d1d5db; margin-top:12px">
+          روی دکمه بالا بزن و برای فعال‌سازی نسخه VIP پیام بده.
+        </p>
       </div>
     </div>
 
-    <div class="card" id="orderSection">
-      <h2>فرم خرید VIP</h2>
-
-      <label>نام شما</label>
-      <input id="customerName" type="text" placeholder="مثلاً رضا" />
-
-      <label>کشور</label>
-      <select id="customerCountry">
-        <option value="">انتخاب کشور</option>
-        <option>Afghanistan</option>
-        <option>Iran</option>
-        <option>Germany</option>
-        <option>Turkey</option>
-        <option>UAE</option>
-        <option>Other</option>
-      </select>
-
-      <label>شناسه تماس شما</label>
-      <input id="customerContact" type="text" placeholder="تلگرام / واتساپ / ایمیل" />
-
-      <label>پلن انتخابی</label>
-      <input id="selectedPlan" type="text" placeholder="مثلاً VIP ماهانه" readonly />
-
-      <label>قیمت</label>
-      <input id="selectedPrice" type="text" placeholder="$15" readonly />
-
-      <label>توضیح اختیاری</label>
-      <textarea id="customerNote" rows="4" placeholder="اگر خواستی پیام بنویس"></textarea>
-
-      <div class="row">
-        <button class="btn btn-primary" id="generateOrderBtn">ساخت سفارش</button>
-        <button class="btn btn-light" id="copyOrderBtn">کپی سفارش</button>
-      </div>
-
-      <div id="orderResult" class="hidden" style="margin-top:12px;">
-        <div class="success">سفارش ساخته شد. این متن را برای خودت نگه دار یا برای مشتری کپی کن.</div>
-        <div class="code-box" id="orderText" style="margin-top:10px;"></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>فعال‌سازی VIP با کد</h2>
-      <p class="small">اگر کد VIP داری، اینجا وارد کن تا نسخه ویژه باز شود.</p>
-      <input id="vipCodeInput" type="text" placeholder="کد VIP را وارد کن" />
-      <div class="row">
-        <button class="btn btn-primary" id="activateVipBtn">فعال‌سازی VIP</button>
-        <button class="btn btn-light" id="logoutVipBtn">خروج از VIP</button>
-      </div>
-
-      <div class="notice" style="margin-top:12px;">
-        کدهای نمونه برای تست: <b>VIP777</b> ، <b>GOLD999</b> ، <b>PRO2026</b>
-      </div>
-    </div>
-
-    <div class="footer">
-      این نسخه برای اجرا روی GitHub Pages و هاست معمولی آماده است.
-    </div>
   </div>
 
-  <script>
-    let score = Number(localStorage.getItem("vip_game_score") || 0);
-    let coins = Number(localStorage.getItem("vip_game_coins") || 0);
-    let power = Number(localStorage.getItem("vip_game_power") || 1);
-    let isVip = localStorage.getItem("vip_game_is_vip") === "yes";
-    let planSelected = "";
+<script>
+let score = 0;
+let coins = 0;
+let power = 1;
+let clicks = 0;
 
-    const validVipCodes = ["VIP777", "GOLD999", "PRO2026"];
+const scoreEl = document.getElementById("score");
+const coinsEl = document.getElementById("coins");
+const powerEl = document.getElementById("power");
+const clicksEl = document.getElementById("clicks");
+const chicken = document.getElementById("chicken");
+const vipSection = document.getElementById("vipSection");
+const vipBtn = document.getElementById("vipBtn");
+const upgradeBtn = document.getElementById("upgradeBtn");
+const gameBox = document.getElementById("gameBox");
 
-    const scoreEl = document.getElementById("score");
-    const coinsEl = document.getElementById("coins");
-    const powerEl = document.getElementById("power");
-    const vipStateEl = document.getElementById("vipState");
-    const chickenBtn = document.getElementById("chickenBtn");
-    const gameBox = document.getElementById("gameBox");
-    const topMessage = document.getElementById("topMessage");
+function render(){
+  scoreEl.innerText = score;
+  coinsEl.innerText = coins;
+  powerEl.innerText = power;
+  clicksEl.innerText = clicks;
+}
 
-    const upgradeBtn = document.getElementById("upgradeBtn");
-    const buyVipBtn = document.getElementById("buyVipBtn");
-    const showVipLoginBtn = document.getElementById("showVipLoginBtn");
-    const vipBonusBtn = document.getElementById("vipBonusBtn");
-    const resetBtn = document.getElementById("resetBtn");
+function showVip(){
+  vipSection.classList.remove("hidden");
+  vipSection.scrollIntoView({behavior:"smooth"});
+}
 
-    const buyPlanBtns = document.querySelectorAll(".buyPlanBtn");
-    const selectedPlan = document.getElementById("selectedPlan");
-    const selectedPrice = document.getElementById("selectedPrice");
-    const generateOrderBtn = document.getElementById("generateOrderBtn");
-    const copyOrderBtn = document.getElementById("copyOrderBtn");
-    const orderResult = document.getElementById("orderResult");
-    const orderText = document.getElementById("orderText");
+function floating(text){
+  const el = document.createElement("div");
+  el.className = "floating";
+  el.textContent = text;
+  el.style.left = (gameBox.offsetWidth / 2 - 20 + (Math.random()*90 - 45)) + "px";
+  el.style.top = (80 + Math.random()*30) + "px";
+  gameBox.appendChild(el);
+  setTimeout(() => el.remove(), 800);
+}
 
-    const customerName = document.getElementById("customerName");
-    const customerCountry = document.getElementById("customerCountry");
-    const customerContact = document.getElementById("customerContact");
-    const customerNote = document.getElementById("customerNote");
+chicken.onclick = function(){
+  clicks++;
+  score += power;
+  coins += power * 2;
 
-    const vipCodeInput = document.getElementById("vipCodeInput");
-    const activateVipBtn = document.getElementById("activateVipBtn");
-    const logoutVipBtn = document.getElementById("logoutVipBtn");
+  floating("+" + (power * 2));
 
-    function saveGame() {
-      localStorage.setItem("vip_game_score", score);
-      localStorage.setItem("vip_game_coins", coins);
-      localStorage.setItem("vip_game_power", power);
-      localStorage.setItem("vip_game_is_vip", isVip ? "yes" : "no");
-    }
+  if(clicks === 20){
+    showVip();
+    alert("برای امکانات بیشتر، نسخه VIP را فعال کن.");
+  }
 
-    function render() {
-      scoreEl.textContent = score;
-      coinsEl.textContent = coins;
-      powerEl.textContent = power;
-      vipStateEl.textContent = isVip ? "VIP" : "FREE";
+  render();
+};
 
-      if (isVip) {
-        topMessage.className = "success";
-        topMessage.textContent = "نسخه VIP فعال است. هر کلیک سکه بیشتری می‌دهد و بونوس ویژه داری.";
-      } else {
-        topMessage.className = "notice";
-        topMessage.textContent = "نسخه رایگان فعال است. با VIP سرعت بیشتر، بونوس ویژه و قدرت بالاتر می‌گیری.";
-      }
-    }
-
-    function floating(text) {
-      const el = document.createElement("div");
-      el.className = "floating";
-      el.textContent = text;
-      el.style.left = (gameBox.offsetWidth / 2 - 15 + (Math.random() * 80 - 40)) + "px";
-      el.style.top = (80 + Math.random() * 30) + "px";
-      gameBox.appendChild(el);
-      setTimeout(() => el.remove(), 800);
-    }
-
-    chickenBtn.addEventListener("click", function() {
-      if (isVip) {
-        score += power * 2;
-        coins += power * 4;
-        floating("+VIP");
-      } else {
-        score += power;
-        coins += power * 2;
-        floating("+2");
-      }
-      saveGame();
-      render();
-    });
-
-    upgradeBtn.addEventListener("click", function() {
-      let cost = isVip ? 40 : 60;
-      if (coins >= cost) {
-        coins -= cost;
-        power += isVip ? 2 : 1;
-        saveGame();
-        render();
-        alert("قدرت ارتقا یافت ✅");
-      } else {
-        alert("سکه کافی نداری.");
-      }
-    });
-
-    vipBonusBtn.addEventListener("click", function() {
-      if (!isVip) {
-        alert("این بخش فقط برای اعضای VIP است.");
-        return;
-      }
-      coins += 100;
-      saveGame();
-      render();
-      alert("بونوس VIP اضافه شد ✅");
-    });
-
-    resetBtn.addEventListener("click", function() {
-      if (!confirm("همه اطلاعات بازی پاک شود؟")) return;
-      score = 0;
-      coins = 0;
-      power = 1;
-      isVip = false;
-      saveGame();
-      render();
-    });
-
-    buyVipBtn.addEventListener("click", function() {
-      document.getElementById("orderSection").scrollIntoView({ behavior: "smooth" });
-    });
-
-    showVipLoginBtn.addEventListener("click", function() {
-      vipCodeInput.scrollIntoView({ behavior: "smooth" });
-      vipCodeInput.focus();
-    });
-
-    buyPlanBtns.forEach(btn => {
-      btn.addEventListener("click", function() {
-        planSelected = this.dataset.plan;
-        selectedPlan.value = this.dataset.plan;
-        selectedPrice.value = this.dataset.price;
-        document.getElementById("orderSection").scrollIntoView({ behavior: "smooth" });
-      });
-    });
-
-    generateOrderBtn.addEventListener("click", function() {
-      const name = customerName.value.trim();
-      const country = customerCountry.value.trim();
-      const contact = customerContact.value.trim();
-      const note = customerNote.value.trim();
-      const plan = selectedPlan.value.trim();
-      const price = selectedPrice.value.trim();
-
-      if (!name || !country || !contact || !plan || !price) {
-        alert("همه بخش‌های مهم را پر کن.");
-        return;
-      }
-
-      const orderId = "ORD-" + Math.floor(Math.random() * 900000 + 100000);
-      const text =
-`درخواست خرید VIP
-شماره سفارش: ${orderId}
-نام: ${name}
-کشور: ${country}
-تماس: ${contact}
-پلن: ${plan}
-قیمت: ${price}
-یادداشت: ${note || "-"}
-
-پس از پرداخت، کد VIP برای کاربر ارسال شود.`;
-
-      orderText.textContent = text;
-      orderResult.classList.remove("hidden");
-    });
-
-    copyOrderBtn.addEventListener("click", function() {
-      const text = orderText.textContent.trim();
-      if (!text) {
-        alert("اول سفارش بساز.");
-        return;
-      }
-      navigator.clipboard.writeText(text).then(function() {
-        alert("متن سفارش کپی شد ✅");
-      }).catch(function() {
-        alert("کپی نشد. دستی کپی کن.");
-      });
-    });
-
-    activateVipBtn.addEventListener("click", function() {
-      const code = vipCodeInput.value.trim().toUpperCase();
-      if (validVipCodes.includes(code)) {
-        isVip = true;
-        saveGame();
-        render();
-        alert("VIP با موفقیت فعال شد ✅");
-      } else {
-        alert("کد VIP درست نیست.");
-      }
-    });
-
-    logoutVipBtn.addEventListener("click", function() {
-      isVip = false;
-      saveGame();
-      render();
-      alert("VIP غیرفعال شد.");
-    });
-
+upgradeBtn.onclick = function(){
+  const cost = 50;
+  if(coins >= cost){
+    coins -= cost;
+    power += 1;
     render();
-  </script>
+    alert("قدرت بیشتر شد ✅");
+  } else {
+    alert("سکه کافی نداری.");
+  }
+};
+
+vipBtn.onclick = function(){
+  showVip();
+};
+
+render();
+</script>
 </body>
 </html>
